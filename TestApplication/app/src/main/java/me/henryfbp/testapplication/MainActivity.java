@@ -17,16 +17,25 @@ public class MainActivity extends AppCompatActivity {
         Log.i("test", "button clicked!");
 
         EditText text = new EditText(this);
+        text.setText("I am an even testier string!");
+
+        text.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        ));
+
+        linearLayout.addView(text);
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         button = findViewById(R.id.button);
         linearLayout = findViewById(R.id.linearLayout);
 
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
 }
