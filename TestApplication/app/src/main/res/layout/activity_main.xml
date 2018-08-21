@@ -21,15 +21,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editText"
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/test_string"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="38dp" />
+                android:text="@string/test_string" />
 
         </LinearLayout>
     </ScrollView>
