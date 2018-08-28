@@ -19,17 +19,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        this.setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = this.findViewById(R.id.toolbar);
+        this.setSupportActionBar(toolbar);
 
-        LinearLayout templist = findViewById(R.id.linearLayoutTemperatureList);
+        LinearLayout templist = this.findViewById(R.id.linearLayoutTemperatureList);
 
         templist.addView(new TemperatureElement(this.getApplicationContext(),
                 new TemperatureUnit("x")));
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
