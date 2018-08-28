@@ -30,7 +30,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void funWithMXParser() {
+    public void funWithMXParser() { //see https://stackoverflow.com/questions/4460631/java-how-to-implement-math-parsing
 
         String tag = new Object() {
         }.getClass().getEnclosingMethod().getName(); //current func name
