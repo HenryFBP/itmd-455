@@ -1,11 +1,14 @@
 package me.henryfbp.temperatureconverter;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.henryfbp.temperatureconverter.lib.EditableTextWatcher;
+import me.henryfbp.temperatureconverter.lib.HLib;
 import me.henryfbp.temperatureconverter.lib.TemperatureElement;
 import me.henryfbp.temperatureconverter.lib.TemperatureSolver;
 import me.henryfbp.temperatureconverter.lib.TemperatureUnit;
@@ -29,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         final Map<String, TemperatureElement> tempelems = new HashMap<>();
         final TemperatureSolver ts = new TemperatureSolver();
-        final Integer[] times_iterated = {0};
+        final Context context = this.getApplicationContext();
+        final MainActivity mainActivity = this;
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
@@ -43,6 +48,51 @@ public class MainActivity extends AppCompatActivity {
         tempelems.put("fahrenheit", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("f")));
         tempelems.put("celsius", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("c")));
         tempelems.put("kelvin", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("k")));
+
+        // This will update the background color to match the temperature.
+        tempelems.get("fahrenheit").editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                View v = mainActivity.findViewById(R.id.root);
+
+                // 0 is blue,
+                // 100 is red.
+                Float percent = tempelems.get("fahrenheit").getTemp().floatValue() / 100;
+
+                // Avoid IllegalArgExceptions.
+                if (percent > 1f) {
+                    percent = 1f;
+                }
+                if (percent < 0f) {
+                    percent = 0f;
+                }
+
+                //Mix the two colors.
+                Color c = HLib.mixColors(
+                        mainActivity.getColor(R.color.warm),
+                        mainActivity.getColor(R.color.cold),
+                        percent
+                );
+
+                Log.i("bg_color", percent.toString() + "->" + c.toString());
+
+                // Apply the two colors.
+                v.setBackgroundColor(
+                        c.toArgb()
+                );
+            }
+        });
 
         //  For each String <---> TemperatureElement, add a listener.
         for (Map.Entry<String, TemperatureElement> entry : tempelems.entrySet()) {

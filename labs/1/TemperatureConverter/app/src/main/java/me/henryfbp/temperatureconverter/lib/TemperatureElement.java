@@ -38,7 +38,12 @@ public class TemperatureElement extends LinearLayout {
     }
 
     public BigDecimal getTemp() {
-        return new BigDecimal(this.editText.getText().toString());
+        try {
+            return new BigDecimal(this.editText.getText().toString());
+
+        } catch (NumberFormatException nfe) {
+            return new BigDecimal(0);
+        }
     }
 
     public void setTemp(BigDecimal t) {
