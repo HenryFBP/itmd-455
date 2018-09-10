@@ -11,6 +11,10 @@ import org.mariuszgromada.math.mxparser.Argument;
 import org.mariuszgromada.math.mxparser.Expression;
 import org.mariuszgromada.math.mxparser.Function;
 
+import java.math.BigDecimal;
+
+import me.henryfbp.temperatureconverter.lib.TemperatureSolver;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -50,6 +54,22 @@ public class ExampleInstrumentedTest {
                 e.calculate()));
 
         assertTrue(e.calculate() == ((2 * x) + 3));
+    }
+
+    @Test
+    public void testTemperatureSolver() {
+        String tag = new Object() {
+        }.getClass().getEnclosingMethod().getName(); //current func name
+
+        BigDecimal c = new BigDecimal(30d);
+
+        TemperatureSolver ts = new TemperatureSolver();
+
+        BigDecimal f = ts.solve("celsius", "fahrenheit", c);
+
+        Log.i(tag, String.format("%.2fc = %.2ff", c.floatValue(), f.floatValue()));
+
+        assertEquals(f.doubleValue(), (c.doubleValue() * (9d / 5d)) + 32d, 0.05d);
     }
 
 

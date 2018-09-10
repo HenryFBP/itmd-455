@@ -5,18 +5,31 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.HashMap;
+import java.util.Map;
+
+import me.henryfbp.temperatureconverter.lib.EditableTextWatcher;
 import me.henryfbp.temperatureconverter.lib.TemperatureElement;
+import me.henryfbp.temperatureconverter.lib.TemperatureSolver;
 import me.henryfbp.temperatureconverter.lib.TemperatureUnit;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        final Map<String, TemperatureElement> tempelems = new HashMap<>();
+        final TemperatureSolver ts = new TemperatureSolver();
+        final Integer[] times_iterated = {0};
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
@@ -26,8 +39,72 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout templist = this.findViewById(R.id.linearLayoutTemperatureList);
 
-        templist.addView(new TemperatureElement(this.getApplicationContext(),
-                new TemperatureUnit("x")));
+
+        tempelems.put("fahrenheit", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("f")));
+        tempelems.put("celsius", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("c")));
+
+        //  For each String <---> TemperatureElement, add a listener.
+        for (Map.Entry<String, TemperatureElement> entry : tempelems.entrySet()) {
+
+            final String k = entry.getKey();
+            final TemperatureElement v = entry.getValue();
+
+            v.editText.addTextChangedListener(new EditableTextWatcher() {
+
+
+                @Override
+                public void beforeTextChange(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                protected void onTextChange(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Log.i(("main_tempTextEdit_" + k), s.toString());
+
+                    //After text changes, update ALL temperatures that are not the selected one.
+                    for (Map.Entry<String, TemperatureElement> entry : tempelems.entrySet()) {
+                        String key = entry.getKey();
+                        TemperatureElement value = entry.getValue();
+
+                        // If we're not looking at ourselves, solve it!
+                        if (!key.equalsIgnoreCase(k)) {
+
+                            times_iterated[0]++;
+
+                            if (times_iterated[0] >= tempelems.size()) {
+                                times_iterated[0] = 0;
+                                return;
+                            }
+
+                            try {
+
+                                TemperatureElement otherElem = tempelems.get(key);
+
+                                BigDecimal solution = ts.solve(k, key, v.getTemp());
+
+                                otherElem.setTemp(solution.round(new MathContext(4)));
+                            } catch (Exception e) {
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                protected void afterTextChange(Editable s) {
+
+                }
+
+            });
+
+            templist.addView(v);
+        }
+
 
         FloatingActionButton fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
