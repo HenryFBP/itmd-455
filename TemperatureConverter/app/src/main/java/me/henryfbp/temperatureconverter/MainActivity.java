@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         tempelems.put("fahrenheit", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("f")));
         tempelems.put("celsius", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("c")));
+        tempelems.put("kelvin", new TemperatureElement(this.getApplicationContext(), new TemperatureUnit("k")));
 
         //  For each String <---> TemperatureElement, add a listener.
         for (Map.Entry<String, TemperatureElement> entry : tempelems.entrySet()) {
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             final String k = entry.getKey();
             final TemperatureElement v = entry.getValue();
 
-            v.editText.addTextChangedListener(new EditableTextWatcher() {
+            EditableTextWatcher tw = new EditableTextWatcher() {
 
 
                 @Override
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void afterTextChanged(Editable s) {
+                public void afterTextChange(Editable s) {
                     Log.i(("main_tempTextEdit_" + k), s.toString());
 
                     //After text changes, update ALL temperatures that are not the selected one.
@@ -74,34 +75,30 @@ public class MainActivity extends AppCompatActivity {
                         // If we're not looking at ourselves, solve it!
                         if (!key.equalsIgnoreCase(k)) {
 
-                            times_iterated[0]++;
-
-                            if (times_iterated[0] >= tempelems.size()) {
-                                times_iterated[0] = 0;
-                                return;
-                            }
-
                             try {
 
                                 TemperatureElement otherElem = tempelems.get(key);
 
                                 BigDecimal solution = ts.solve(k, key, v.getTemp());
 
+                                //Do NOT trigger the other element's EditText TextWatcher
+                                otherElem.editText.removeTextChangedListener(otherElem.textWatcher);
+
+                                // Change the text.
                                 otherElem.setTemp(solution.round(new MathContext(4)));
+
+                                // Re-register the textChangedListener.
+                                otherElem.editText.addTextChangedListener(otherElem.textWatcher);
                             } catch (Exception e) {
-                                return;
+                                e.printStackTrace();
                             }
                         }
                     }
                 }
+            };
 
-                @Override
-                protected void afterTextChange(Editable s) {
-
-                }
-
-            });
-
+            v.editText.addTextChangedListener(tw);
+            v.textWatcher = tw;
             templist.addView(v);
         }
 

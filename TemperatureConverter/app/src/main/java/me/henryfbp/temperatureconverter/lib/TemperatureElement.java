@@ -1,6 +1,7 @@
 package me.henryfbp.temperatureconverter.lib;
 
 import android.content.Context;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ public class TemperatureElement extends LinearLayout {
 
     public TemperatureUnit unit;
     public EditText editText;
+    public TextWatcher textWatcher;
     public TextView textView;
 
     public TemperatureElement(Context context, TemperatureUnit t) {

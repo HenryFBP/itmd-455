@@ -16,9 +16,11 @@ public class TemperatureSolver {
     public TemperatureSolver() {
         this.addTemp(
                 new TemperatureSolverSingle("celsius", "fahrenheit", "F(x) = ((9/5) * x) + 32"),
-//                new TemperatureSolverSingle("celsius", "kelvin", "F(x) = x + 273.15"),
-//                new TemperatureSolverSingle("fahrenheit", "kelvin", "F(x) = HELLO THERE"),
-                new TemperatureSolverSingle("fahrenheit", "celsius", "F(x) = (x - 32) * (5/9)")
+                new TemperatureSolverSingle("celsius", "kelvin", "F(x) = x + 273.15"),
+                new TemperatureSolverSingle("fahrenheit", "kelvin", "F(x) = (x + 459.67) * (5/9)"),
+                new TemperatureSolverSingle("fahrenheit", "celsius", "F(x) = (x - 32) * (5/9)"),
+                new TemperatureSolverSingle("kelvin", "celsius", "F(x) = x - 273.15"),
+                new TemperatureSolverSingle("kelvin", "fahrenheit", "F(x) = ((9/5) * x) - 459.67")
         );
     }
 
