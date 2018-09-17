@@ -97,13 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 "unchecked",
                 "rawtypes"
         })
-  /*
-  * To use a basic ArrayAdapter, you just need to
-  initialize the adapter and
-  * attach the adapter to the ListView. First,
-  initialize the adapter...:
-  *
-  */
+        /*
+         * To use a basic ArrayAdapter, you just need to
+         * initialize the adapter and
+         * attach the adapter to the ListView. First,
+         * initialize the adapter...:
+         */
                 ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1, wkTemps);
