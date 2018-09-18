@@ -1,4 +1,4 @@
-package me.henryfbp.temperatureconverter.lib;
+package me.henryfbp.library;
 
 import android.graphics.Color;
 

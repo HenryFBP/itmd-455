@@ -20,11 +20,12 @@ import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.henryfbp.temperatureconverter.lib.EditableTextWatcher;
-import me.henryfbp.temperatureconverter.lib.HLib;
+import me.henryfbp.library.EditableTextWatcher;
+import me.henryfbp.library.TemperatureSolver;
 import me.henryfbp.temperatureconverter.lib.TemperatureElement;
-import me.henryfbp.temperatureconverter.lib.TemperatureSolver;
 import me.henryfbp.temperatureconverter.lib.TemperatureUnit;
+
+import static me.henryfbp.library.HLib.mixColors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         final TemperatureSolver ts = new TemperatureSolver();
         final Context context = this.getApplicationContext();
         final MainActivity mainActivity = this;
+
+        System.out.println();
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //Mix the two colors.
-                Color c = HLib.mixColors(
+                Color c = mixColors(
                         mainActivity.getColor(R.color.warm),
                         mainActivity.getColor(R.color.cold),
                         percent

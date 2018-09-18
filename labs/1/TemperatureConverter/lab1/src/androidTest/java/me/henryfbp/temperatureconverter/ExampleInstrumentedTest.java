@@ -13,10 +13,11 @@ import org.mariuszgromada.math.mxparser.Function;
 
 import java.math.BigDecimal;
 
-import me.henryfbp.temperatureconverter.lib.TemperatureSolver;
+import me.henryfbp.library.TemperatureSolver;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import me.henryfbp.library.TestClass;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -70,6 +71,12 @@ public class ExampleInstrumentedTest {
         Log.i(tag, String.format("%.2fc = %.2ff", c.floatValue(), f.floatValue()));
 
         assertEquals(f.doubleValue(), (c.doubleValue() * (9d / 5d)) + 32d, 0.05d);
+    }
+
+    @Test
+    public void testExportingJarsUsingGradleHopeThisWorks()
+    {
+        String s = TestClass.coolfunc();
     }
 
 
