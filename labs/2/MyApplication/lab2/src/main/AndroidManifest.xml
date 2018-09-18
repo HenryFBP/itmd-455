@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TempPicker"
+            android:label="@string/title_activity_temp_picker"></activity>
     </application>
 
 </manifest>
