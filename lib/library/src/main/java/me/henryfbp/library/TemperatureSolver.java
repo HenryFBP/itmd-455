@@ -1,4 +1,4 @@
-package me.henryfbp.temperatureconverter.lib;
+package me.henryfbp.library;
 
 import com.google.common.collect.ImmutableList;
 

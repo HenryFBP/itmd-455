@@ -1,4 +1,4 @@
-package me.henryfbp.temperatureconverter.lib;
+package me.henryfbp.library;
 
 import org.mariuszgromada.math.mxparser.Argument;
 import org.mariuszgromada.math.mxparser.Expression;
