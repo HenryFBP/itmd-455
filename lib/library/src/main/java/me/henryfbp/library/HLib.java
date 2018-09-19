@@ -6,6 +6,17 @@ import java.util.Random;
 
 public class HLib {
 
+
+    public static void println(String arg)
+    {
+        System.out.println(arg);
+    }
+
+    public static void print(String args)
+    {
+        System.out.print(args);
+    }
+
     public static Color randomColor() {
         Random r = new Random();
         return Color.valueOf(r.nextFloat(), r.nextFloat(), r.nextFloat());

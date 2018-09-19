@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 
-
 buildscript {
     repositories {
         google()
@@ -41,9 +40,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.google.guava:guava:15.0'
+    implementation 'com.google.guava:guava:23.0'
     implementation 'org.mariuszgromada.math:MathParser.org-mXparser:4.2.0'
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.github.fedy2:yahoo-weather-java-api:2.0.2"
+    compile "javax.xml.bind:jaxb-api:2.2.12"
+    compile "com.sun.xml.bind:jaxb-core:2.2.11"
+    compile "com.sun.xml.bind:jaxb-impl:2.2.11"
+    compile "javax.activation:activation:1.1.1"
 
 }
 
@@ -56,7 +60,10 @@ task createJar(type: Copy) {
 }
 
 task deleteJar(type: Delete) {
-    delete 'build/libs/henryLib.jar'
+    delete 'release/henryLib.jar'
 }
 
 createJar.dependsOn(deleteJar, build)
+repositories {
+    mavenCentral()
+}
