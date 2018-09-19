@@ -35,8 +35,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.google.guava:guava:15.0'
-    implementation 'org.mariuszgromada.math:MathParser.org-mXparser:4.2.0'
 
     implementation 'com.android.support:cardview-v7:28.0.0-rc02'
+    implementation 'org.mariuszgromada.math:MathParser.org-mXparser:4.2.0'
+    implementation 'com.google.guava:guava:14.0'
+    implementation "com.github.fedy2:yahoo-weather-java-api:2.0.2"
+
+    implementation "javax.xml.bind:jaxb-api:2.2.12"
+    implementation "com.sun.xml.bind:jaxb-core:2.2.11"
+    implementation "com.sun.xml.bind:jaxb-impl:2.2.11"
+    implementation "javax.activation:activation:1.1.1"
 }
