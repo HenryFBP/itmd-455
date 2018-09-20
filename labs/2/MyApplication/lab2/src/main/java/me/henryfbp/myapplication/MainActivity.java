@@ -3,6 +3,7 @@ package me.henryfbp.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -37,45 +38,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //declare viewstub object
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        if (extras != null && extras.containsKey("temperature")) {
+            Integer temperature = (Integer) extras.get("temperature");
+            Log.i("GETTIN INTENT", String.valueOf(temperature));
+            start_position = temperature + start;
+        } else {
+            Log.i("GETTIN INTENT", "No 'temperature' from Intent's Extras. Must be the first time we're in this Activity.");
+        }
+
+        textView = findViewById(R.id.textview);
+        textView.setText("0c");
+        //set default view
+        seekBar = findViewById(R.id.seekbar);
+
         stub = findViewById(R.id.viewStub);
-        @SuppressWarnings("unused")
         View inflated = stub.inflate();
+
         stub.setVisibility(View.INVISIBLE);
 
-        //ViewStub logic
         button = findViewById(R.id.button);
-        //handle checkbox click event
         button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //remove objs from parent view to allow for child view objs
-//                button.setVisibility(View.GONE);
-//                seekBar.setVisibility(View.GONE);
-//                textView.setVisibility(View.GONE);
-//                stub.setVisibility(View.VISIBLE);
                 Intent i = new Intent(v.getContext(), TempPicker.class);
 
                 startActivityForResult(i, 0);
             }
         });
 
-        //seekbar logic
-
-        textView = findViewById(R.id.textview);
-        textView.setText("0c");
-        //set default view
-        seekBar = findViewById(R.id.seekbar);
-        seekBar.setProgress(start_position);
-
         //create event handler for SeekBar
         seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if (temp == 0) //for initial view result
-                    Toast.makeText(getBaseContext(), "32f", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getBaseContext(), String.format("%sf", String.valueOf(discrete)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), String.format("%sf", String.valueOf(discrete)), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -90,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(String.format("%dc", temp));
             }
         });
+
+        seekBar.setProgress(start_position);
+
 
     } //end onCreate method
 }

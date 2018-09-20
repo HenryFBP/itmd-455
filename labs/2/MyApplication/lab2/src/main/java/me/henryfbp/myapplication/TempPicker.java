@@ -1,6 +1,7 @@
 package me.henryfbp.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,7 @@ public class TempPicker extends Activity {
 
     ListView listView;
 
-    List<String> wkTemps = Arrays.asList("1", "-10", "0", "30", "10");
+    List<Integer> wkTemps = Arrays.asList(1, -10, 0, 30, 10);
 
 
     @Override
@@ -33,9 +34,15 @@ public class TempPicker extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //Someone clicks a single item
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object item = parent.getItemAtPosition(position);
+                Integer item = (Integer) parent.getItemAtPosition(position);
 
                 Log.i("U KLIK ME?", item.toString());
+
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
+                i.putExtra("temperature", item); // pass temperature
+
+                startActivity(i); //start previous activity
             }
         });
     }
