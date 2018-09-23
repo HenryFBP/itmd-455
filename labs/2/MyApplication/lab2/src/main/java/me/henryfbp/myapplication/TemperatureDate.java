@@ -13,7 +13,7 @@ import java.util.List;
 
 import me.henryfbp.library.TemperatureSolver;
 
-public class TemperatureDate implements Serializable{
+public class TemperatureDate implements Serializable {
 
     public static final TemperatureSolver solver = new TemperatureSolver();
 
