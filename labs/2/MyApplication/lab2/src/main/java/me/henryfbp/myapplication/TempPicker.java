@@ -39,7 +39,6 @@ public class TempPicker extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-
         RequestQueue mRequestQueue;
 
         // Instantiate the cache
