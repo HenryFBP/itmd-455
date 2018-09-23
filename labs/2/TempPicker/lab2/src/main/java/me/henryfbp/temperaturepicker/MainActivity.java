@@ -1,4 +1,4 @@
-package me.henryfbp.myapplication;
+package me.henryfbp.temperaturepicker;
 
 import android.content.Intent;
 import android.os.Bundle;

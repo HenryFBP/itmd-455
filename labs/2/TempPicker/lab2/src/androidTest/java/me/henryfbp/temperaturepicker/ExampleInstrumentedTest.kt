@@ -1,4 +1,4 @@
-package me.henryfbp.myapplication
+package me.henryfbp.temperaturepicker
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

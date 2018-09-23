@@ -1,4 +1,4 @@
-package me.henryfbp.myapplication;
+package me.henryfbp.temperaturepicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
