@@ -33,4 +33,8 @@ public class TemperatureSolver {
     public BigDecimal solve(String from, String to, BigDecimal temp) {
         return this.map.get(ImmutableList.of(from, to)).solve(temp);
     }
+
+    public BigDecimal solve(String from, String to, Integer temp) {
+        return this.solve(from, to, BigDecimal.valueOf(temp.doubleValue()));
+    }
 }

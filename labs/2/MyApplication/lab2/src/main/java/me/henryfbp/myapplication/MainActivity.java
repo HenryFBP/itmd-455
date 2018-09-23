@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = intent.getExtras();
 
         if (extras != null && extras.containsKey("temperature")) {
-            Integer temperature = (Integer) extras.get("temperature");
-            Log.i("GETTIN INTENT", String.valueOf(temperature));
-            start_position = temperature + start;
+            TemperatureDate temperature = (TemperatureDate) extras.get("temperature");
+            Log.i("GETTIN INTENT", temperature.toString());
+            start_position = temperature.temperature.intValue() + start;
         } else {
-            Log.i("GETTIN INTENT", "No 'temperature' from Intent's Extras. Must be the first time we're in this Activity.");
+            Log.i("GETTIN INTENT", "No 'temperature' from Intent's Extras. Must be the first date we're in this Activity.");
         }
 
         textView = findViewById(R.id.textview);

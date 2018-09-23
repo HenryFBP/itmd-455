@@ -2,6 +2,7 @@ package me.henryfbp.library;
 
 import android.graphics.Color;
 
+import java.util.Map;
 import java.util.Random;
 
 public class HLib {
@@ -53,6 +54,21 @@ public class HLib {
 
     public static Color mixColors(int c1, int c2, float percent) {
         return mixColors(Color.valueOf(c1), Color.valueOf(c2), percent);
+    }
+
+    public static String apply_json_params(String str, Map<String, String> args){
+
+        StringBuilder s = new StringBuilder(str);
+
+        for (Map.Entry e : args.entrySet()) {
+            String k = (String) e.getKey();
+            String v = (String) e.getValue();
+
+            s.append("&").append(k).append("=").append(v);
+        }
+
+        return s.toString();
+
     }
 
 

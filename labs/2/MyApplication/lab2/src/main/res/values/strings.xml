@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Lab 2, Temperature Picker</string>
     <string name="title_activity_temp_picker">TempPicker</string>
 </resources>
