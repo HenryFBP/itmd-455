@@ -22,7 +22,6 @@ class ExampleUnitTest {
              */
     fun can_import_henrylib() {
         try {
-
             var c = mixColors(Color.BLACK, Color.WHITE, 1.0f)
         } catch (e: RuntimeException) {
             assertEquals(e.javaClass, RuntimeException().javaClass)
