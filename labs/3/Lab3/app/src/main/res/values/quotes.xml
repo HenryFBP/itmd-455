@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="quote_1">Innovation distinguished between a leader and a follower</string>
-    <string name="quote_2">I want to put a ding in the universe!</string>
-    <string name="quote_3">People don\'t know what they want until you show it to them.</string>
-    <string name="quote_4">The only way to be truly satisfied is to do what you believe is great work.</string>
-    <string name="quote_5">That\'s been one of my mantras — focus and simplicity. Simple can be harder than complex: You have to work hard to get your thinking clean to make it simple. But it\'s worth it in the end because once you get there, you can move mountains.</string>
-    <string name="quote_6">Great things in business are never done by one person, they\'re done by a team of people.</string>
-    <string name="quote_7">You can\'t connect the dots looking forward; you can only connect them looking backward.</string>
-    <string name="quote_8">Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.</string>
-    <string name="quote_9">I\'m the only person I know that\'s lost a quarter of a billion dollars in one year… It\'s very character-building.</string>
-    <string name="quote_10">It\'s more fun to be a pirate than join the Navy.</string>
+    <string name="quote_1_sj">Innovation distinguished between a leader and a follower</string>
+    <string name="quote_2_sj">I want to put a ding in the universe!</string>
+    <string name="quote_3_sj">People don\'t know what they want until you show it to them.</string>
+    <string name="quote_4_sj">The only way to be truly satisfied is to do what you believe is great work.</string>
+    <string name="quote_5_sj">That\'s been one of my mantras — focus and simplicity. Simple can be harder than complex: You have to work hard to get your thinking clean to make it simple. But it\'s worth it in the end because once you get there, you can move mountains.</string>
+    <string name="quote_6_sj">Great things in business are never done by one person, they\'re done by a team of people.</string>
+    <string name="quote_7_sj">You can\'t connect the dots looking forward; you can only connect them looking backward.</string>
+    <string name="quote_8_sj">Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.</string>
+    <string name="quote_9_sj">I\'m the only person I know that\'s lost a quarter of a billion dollars in one year… It\'s very character-building.</string>
+    <string name="quote_10_sj">It\'s more fun to be a pirate than join the Navy.</string>
+    <string name="quote_1_j">Oh hi, Mark.</string>
+    <string name="quote_1_a">I think gay marriage is something that should be between a man and a woman.</string>
+    <string name="quote_1_bs">Smoking kills. If you\'re killed, you\'ve lost a very important part of your life.</string>
+    <string name="quote_1_dq">It isn\'t pollution that is hurting the environment, it\'s the impurities in our air and water that are doing it.</string>
+    <string name="quote_1_gg">If it weren\'t for electricity we\'d all be watching television by candlelight.</string>
 </resources>
