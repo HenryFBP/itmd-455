@@ -9,18 +9,19 @@ public class XMLGettersSetters {
     /*This class contains all getter and setter methods to set and retrieve data.*/
 
 
-    private ArrayList<String> title = new ArrayList<String>();
-    private ArrayList<String> artist = new ArrayList<String>();
-    private ArrayList<String> country = new ArrayList<String>();
-    private ArrayList<String> company = new ArrayList<String>();
-    private ArrayList<String> price = new ArrayList<String>();
-    private ArrayList<String> year = new ArrayList<String>();
+    private ArrayList<String> title = new ArrayList<>();
+    private ArrayList<String> artist = new ArrayList<>();
+    private ArrayList<String> country = new ArrayList<>();
+    private ArrayList<String> company = new ArrayList<>();
+    private ArrayList<String> price = new ArrayList<>();
+    private ArrayList<String> year = new ArrayList<>();
+    private ArrayList<String> cd = new ArrayList<>();
 
     public ArrayList<String> getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void addCompany(String company) {
         this.company.add(company);
         Log.i("This is the company:", company);
     }
@@ -29,7 +30,7 @@ public class XMLGettersSetters {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void addPrice(String price) {
         this.price.add(price);
         Log.i("This is the price:", price);
     }
@@ -38,7 +39,7 @@ public class XMLGettersSetters {
         return year;
     }
 
-    public void setYear(String year) {
+    public void addYear(String year) {
         this.year.add(year);
         Log.i("This is the year:", year);
     }
@@ -47,7 +48,7 @@ public class XMLGettersSetters {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void addTitle(String title) {
         this.title.add(title);
         Log.i("This is the title:", title);
     }
@@ -56,7 +57,7 @@ public class XMLGettersSetters {
         return artist;
     }
 
-    public void setArtist(String artist) {
+    public void addArtist(String artist) {
         this.artist.add(artist);
         Log.i("This is the artist:", artist);
     }
@@ -65,9 +66,17 @@ public class XMLGettersSetters {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void addCountry(String country) {
         this.country.add(country);
         Log.i("This is the country:", country);
     }
 
+    public ArrayList<String> getCd() {
+        return cd;
+    }
+
+    public void addCd(String cd) {
+        Log.i("Sold out?: ", cd);
+        this.cd.add(cd);
+    }
 }
