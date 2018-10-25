@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         TextView company[];
         TextView price[];
         TextView year[];
+        TextView cd[];
 
         data = XMLHandler.data;
 
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         company = new TextView[data.getCompany().size()];
         price = new TextView[data.getPrice().size()];
         year = new TextView[data.getYear().size()];
+        cd = new TextView[data.getCd().size()];
 
 
         /**
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
          * the given size of the arraylist is reached.
          **/
         for (int i = 0; i < data.getTitle().size(); i++) {
+
 
             title[i] = new TextView(this);
             title[i].setText(String.format("Title = %s", data.getTitle().get(i)));
@@ -104,12 +107,19 @@ public class MainActivity extends AppCompatActivity {
             year[i] = new TextView(this);
             year[i].setText(String.format("Year = %s", data.getYear().get(i)));
 
-            viewGroupLayout.addView(title[i]);
-            viewGroupLayout.addView(artist[i]);
-            viewGroupLayout.addView(country[i]);
-            viewGroupLayout.addView(company[i]);
-            viewGroupLayout.addView(price[i]);
-            viewGroupLayout.addView(year[i]);
+            cd[i] = new TextView(this);
+            cd[i].setText(String.format("CD? %s", data.getCd().get(i)));
+
+            if (data.getCd().get(i).equalsIgnoreCase("yes")) { // Only add ones which are sold out.
+                viewGroupLayout.addView(title[i]);
+                viewGroupLayout.addView(artist[i]);
+                viewGroupLayout.addView(country[i]);
+                viewGroupLayout.addView(company[i]);
+                viewGroupLayout.addView(price[i]);
+                viewGroupLayout.addView(year[i]);
+                viewGroupLayout.addView(cd[i]);
+            }
+
         }
 
         setContentView(layout);

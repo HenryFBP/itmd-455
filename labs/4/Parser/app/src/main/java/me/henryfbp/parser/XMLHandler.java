@@ -1,5 +1,7 @@
 package me.henryfbp.parser;
 
+import android.util.Log;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -29,6 +31,12 @@ public class XMLHandler extends DefaultHandler {
 
         if (localName.equals("CATALOG")) {
             data = new XMLGettersSetters();
+        } else if (localName.equals("CD")) {
+            try {
+                data.addCd(attributes.getValue("attr"));
+            } catch (Exception e) {
+                Log.i("err on handler   ", e.getMessage());
+            }
         }
     }
 
@@ -45,17 +53,17 @@ public class XMLHandler extends DefaultHandler {
          * Sets the values after retrieving the values from the XML tags
          * */
         if (localName.equalsIgnoreCase("title")) {
-            data.setTitle(elementValue);
+            data.addTitle(elementValue);
         } else if (localName.equalsIgnoreCase("artist")) {
-            data.setArtist(elementValue);
+            data.addArtist(elementValue);
         } else if (localName.equalsIgnoreCase("country")) {
-            data.setCountry(elementValue);
+            data.addCountry(elementValue);
         } else if (localName.equalsIgnoreCase("company")) {
-            data.setCompany(elementValue);
+            data.addCompany(elementValue);
         } else if (localName.equalsIgnoreCase("price")) {
-            data.setPrice(elementValue);
+            data.addPrice(elementValue);
         } else if (localName.equalsIgnoreCase("year")) {
-            data.setYear(elementValue);
+            data.addYear(elementValue);
         }
     }
 
