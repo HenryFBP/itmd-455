@@ -1,7 +1,9 @@
 package me.henryfbp.parser;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -10,11 +12,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     public static final String USERNAME = "scrungo";
     public static final String PASSWORD = "chungus";
     public static final int CHANCES = 3;
+
+    Button buttonLogin;
+    FloatingActionButton floatingActionButtonLazy;
+
+    TextView textViewProblems;
+    EditText editTextUsername;
+    EditText editTextPassword;
+
+    public void populateComponents() {
+        buttonLogin = findViewById(R.id.buttonLogin);
+        floatingActionButtonLazy = findViewById(R.id.floatingActionButtonLazy);
+
+        textViewProblems = findViewById(R.id.textViewProblems);
+        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextPassword = findViewById(R.id.editTextPassword);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,8 +42,7 @@ class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_login);
 
-        final Button buttonLogin = findViewById(R.id.buttonLogin);
-        final TextView textViewProblems = findViewById(R.id.textViewProblems);
+        populateComponents();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
 
@@ -34,11 +51,13 @@ class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (credsValid()) {
                     Toast.makeText(getApplicationContext(), "Welcome to hell!", Toast.LENGTH_LONG).show();
+
+                    Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(myIntent);
                 } else {
                     textViewProblems.setText(String.format("Wrong login creds.\n" +
-                                    "Try (%s:%s).\n" +
-                                    "%d chances left.",
-                            USERNAME, PASSWORD, tries[0]));
+                            "Try pressing the floating action button.\n" +
+                            "%d chances left.", tries[0]));
 
                     tries[0] = tries[0] - 1;
                 }
@@ -48,24 +67,30 @@ class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        floatingActionButtonLazy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                populateLogin();
+            }
+        });
+    }
+
+    private void populateLogin() {
+        editTextUsername.setText(USERNAME);
+        editTextPassword.setText(PASSWORD);
     }
 
     private String getUsername() {
-
-        EditText t = findViewById(R.id.editTextUsername);
-
-        return t.getText().toString();
+        return editTextUsername.getText().toString();
     }
 
     private String getPassword() {
-
-        EditText t = findViewById(R.id.editTextPassword);
-
-        return t.getText().toString();
+        return editTextPassword.getText().toString();
     }
 
     public boolean credsValid() {
-        return getUsername().equals(USERNAME) && getPassword().equals(PASSWORD);
+        return (getUsername().equals(USERNAME) && getPassword().equals(PASSWORD));
     }
 
 }
