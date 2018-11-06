@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,16 +22,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int LAST_QUESTION = 4;
     private static final String DATA_URI = "http://www.papademas.net:81/sample.txt";
 
-    private static final HashMap<Integer, Boolean> answers = new HashMap<Integer, Boolean>() {{
+    private static final HashMap<Integer, Boolean> ANSWER_BANK = new HashMap<Integer, Boolean>() {{
         put(0, true);
         put(1, false);
+        put(2, true);
+        put(3, false);
+        put(4, true);
     }};
+
+    private static final HashMap<Integer, Boolean> USER_CORRECT_ANSWERS = new HashMap<Integer, Boolean>();
 
 
     static int questionNum = 0;
@@ -39,8 +45,21 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog pd;
     ArrayList<String> stringList = new ArrayList<>();
     ImageView imageViewNext;
+    ImageView imageViewPrev;
     private RadioGroup radioQuestions;
     private RadioButton radioButton;
+
+    public static Integer getBooleans(HashMap<Integer, Boolean> h) {
+
+        int x = 0;
+
+        for (Map.Entry<Integer, Boolean> e : h.entrySet()) {
+            if (e.getValue()) {
+                x += 1;
+            }
+        }
+        return x;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,19 +91,57 @@ public class MainActivity extends AppCompatActivity {
                 // get selected radio button from radioGroup
                 int selectedId = radioQuestions.getCheckedRadioButtonId();
 
-                // find the radiobutton by returned id
-                radioButton = findViewById(selectedId);
+
+                if (selectedId == -1) { // They haven't selected anything...
+                    Toast.makeText(MainActivity.this, "You haven't selected anything!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    // find the radiobutton by returned id
+                    radioButton = findViewById(selectedId);
+
+                    //If answer matches our answer bank
+                    boolean correctAnswer = ANSWER_BANK.get(questionNum) == radioButton.getText().toString().equalsIgnoreCase("true");
+
+                    // Record user's answer's correctness
+                    USER_CORRECT_ANSWERS.put(questionNum, correctAnswer);
+
+                    RatingBar r = findViewById(R.id.ratingBar);
+
+                    Float rating;
+
+                    Float correct = Float.valueOf(getBooleans(USER_CORRECT_ANSWERS));
+                    Float total = (float) USER_CORRECT_ANSWERS.size();
+                    Float numStars = (float) r.getNumStars();
 
 
-                Toast.makeText(MainActivity.this,
-                        (answers.get(questionNum) == Boolean.parseBoolean(radioButton.getText().toString())) ? //If answer matches our answer bank
-                                "Right!" : "Wrong!",
-                        Toast.LENGTH_SHORT).show();
+                    TextView textViewRating = findViewById(R.id.textViewScore2);
+                    textViewRating.setText(String.format("%.2f/%.2f", correct, total));
+
+                    if (USER_CORRECT_ANSWERS.size() == 0) {
+                        rating = 1f;
+                    } else {
+                        rating = (correct / total) * numStars;
+                    }
+
+                    // Set rating to (correct / attempted).
+                    r.setRating(rating);
+
+                    Toast.makeText(MainActivity.this,
+                            correctAnswer ? "Right!" : "Wrong!",
+                            Toast.LENGTH_SHORT).show();
+
+                } catch (NullPointerException e) {
+
+                    // Our answer bank doesn't have this answer.
+                    Toast.makeText(MainActivity.this, String.format("We don't have an answer for number %d.", questionNum), Toast.LENGTH_LONG).show();
+                }
 
             }
         });
         imageListener();
     }//end buttonListener
+
 
     public void imageListener() {
 
@@ -94,12 +151,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // get new question for viewing
-                if (questionNum >= LAST_QUESTION) {//reset count to -1 to start first question again
+
+                if (questionNum >= stringList.size() - 1) {//reset count to -1 to start first question again
                     questionNum = -1;
                 }
+
                 txtView.setText(stringList.get(++questionNum));
+
                 //reset radio button (radioTrue) to default
-                radioQuestions.check(R.id.radioTrue);
+                radioQuestions.clearCheck();
+            }
+        });
+
+        imageViewPrev = findViewById(R.id.imageViewPrev);
+        imageViewPrev.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                // get new question for viewing
+
+                if (questionNum <= 0) {//reset count to -1 to start first question again
+                    questionNum = stringList.size();
+                }
+
+                txtView.setText(stringList.get(--questionNum));
+
+                //reset radio button (radioTrue) to default
+                radioQuestions.clearCheck();
             }
         });
     }//end imageListener
@@ -134,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //read content of the file line by line & add it to Stringbuffer
                 while ((StringBuffer = br.readLine()) != null) {
-                    stringList.add(StringBuffer);  //add to Arraylist
+                    stringList.add(StringBuffer);//add to Arraylist
                 }
 
                 br.close();
@@ -142,7 +220,9 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
                 //close dialog if error occurs
-                if (pd != null) pd.dismiss();
+                if (pd != null) {
+                    pd.dismiss();
+                }
             }
 
             return null;
