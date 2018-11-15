@@ -57,11 +57,11 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
 
     override fun onCreate(db: SQLiteDatabase) {
         // SQL statement to create book table
-        val CREATE_BOOK_TABLE = String.format("CREATE TABLE %s (" +
-                "%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "%s TEXT," +
-                "%s TEXT )",
-                TABLE_BOOKS, KEY_ID, KEY_TITLE, KEY_AUTHOR)
+        val CREATE_BOOK_TABLE = """CREATE TABLE $TABLE_BOOKS (
+            |$KEY_ID        INTEGER PRIMARY KEY AUTOINCREMENT,
+            |$KEY_TITLE     TEXT,
+            |$KEY_AUTHOR    TEXT)""".trimMargin()
+
 
         // create books table
         db.execSQL(CREATE_BOOK_TABLE)
@@ -69,7 +69,7 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Drop older books table if existed
-        db.execSQL(String.format("DROP TABLE IF EXISTS %s", TABLE_BOOKS))
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_BOOKS")
 
         // create fresh books table
         this.onCreate(db)
