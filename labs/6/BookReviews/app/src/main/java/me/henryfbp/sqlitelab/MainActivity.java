@@ -31,8 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         List<Book> list = db.getAll();
 
+        Book b = list.get(list.size() - 1);
+        b.setAuthor("Potato Lord");
+
         // Make the author "Potato Lord" for testing purposes.
-        db.update(list.get(list.size() - 1).setAuthor("Potato Lord"));
+        db.update(b);
 
         // Ensure it worked.
         if (!db.getAll().contains(new Book("I am Lord of Potatoes", "Potato Lord"))) {
@@ -44,5 +47,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Check that we have deleted it.
         db.getAll();
+
+        //Test from Step 6:
+        int x = 3;
+        String s1 = "POTATO LORD RETURNS";
+        String s2 = "SPUD MAN";
+
+        int j = db.update(list.get(x), s1, s2);
+        
+        list = db.getAll();
+
+        Book updated = list.get(x);
+
+        if (j != updated.getId()) {
+            throw new AssertionError(updated);
+        }
+
+        if (!updated.getTitle().equalsIgnoreCase(s1)) {
+            throw new AssertionError(updated);
+        }
+
+        if (!updated.getAuthor().equalsIgnoreCase(s2)) {
+            throw new AssertionError(updated);
+        }
+
+
     }
 }

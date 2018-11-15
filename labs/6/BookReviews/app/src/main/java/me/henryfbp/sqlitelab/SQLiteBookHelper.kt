@@ -42,10 +42,8 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
 
         if (cursor.moveToFirst()) {
             do {
-                val book = Book()
-                book.id = java.lang.Long.parseLong(cursor.getString(0))
-                book.title = cursor.getString(1)
-                book.author = cursor.getString(2)
+                val book = Book(cursor.getLong(0), cursor.getString(1), cursor.getString(2))
+
                 books.add(book)
             } while (cursor.moveToNext())
         }
@@ -99,7 +97,7 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     }
 
     // Updating single book
-    fun update(book: Book): Long? {
+    fun update(book: Book): Long {
 
         // 1. get reference to writable DB
         val db = this.writableDatabase
@@ -112,13 +110,46 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         // 3. updating row
         val l = db.update(TABLE_BOOKS, //table
                 values, // column/value
-                String.format("%s = ?", KEY_ID), // selections
-                arrayOf(book.id.toString())).toLong() //selection args
+                "$KEY_ID = ?", // selections
+                arrayOf(book.id.toString())) //selection args
         // 4. close dbase
         db.close()
         Log.d("UpdateBook", book.toString() + "\n")
 
-        return l
+        return l.toLong()
+    }
+
+    fun update(oldbook: Book, newbook: Book): Book {
+
+
+        Log.i(javaClass.simpleName, "Updating this old book to a new one:")
+        Log.i(javaClass.simpleName, oldbook.toString())
+        Log.i(javaClass.simpleName, newbook.toString())
+
+        newbook.id = oldbook.id
+
+        /*
+        We can use the old book's ID to just cause the SQLHelper to update the newbook as if it were
+        the old book.
+        */
+        update(newbook)
+
+        return newbook
+    }
+
+    /***
+     * If I must make this method signature, I will. But begrudgingly!
+     * Step 6 from word doc.
+     *
+     * Ha! Take that, awesome T.A.s!
+     */
+    fun update(oldbook: Book, newTitle: String, newAuthor: String): Int {
+
+        val newbook = Book(oldbook.id!!, newTitle, newAuthor)
+
+        val updatedbook = update(oldbook, newbook).id!!
+
+        return updatedbook.toInt()
     }
 
     // Deleting single book
