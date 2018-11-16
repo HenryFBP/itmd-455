@@ -27,6 +27,22 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         private const val KEY_AUTHOR = "author"
     }
 
+    /**
+     * Get Readable Database.
+     */
+    val rDb: SQLiteDatabase
+        get() {
+            return readableDatabase
+        }
+
+    /**
+     * Get Writable Database.
+     */
+    val wDb: SQLiteDatabase
+        get() {
+            return writableDatabase
+        }
+
 
     // Get All Books
     // 1. build the query
@@ -37,7 +53,7 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     fun getAll(): List<Book> {
         val books = LinkedList<Book>()
         val query = String.format("SELECT * FROM %s", TABLE_BOOKS)
-        val db = this.writableDatabase
+        val db = this.wDb
         val cursor = db.rawQuery(query, null)
 
         if (cursor.moveToFirst()) {
@@ -196,6 +212,17 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         }
 
         return Arrays.asList(*books)
+    }
+
+    /**
+     * How many books?
+     */
+    fun getCount(): Int {
+        val query = "SELECT $KEY_ID FROM $TABLE_BOOKS"
+
+        val cursor = rDb.rawQuery(query, null)
+
+        return cursor.count
     }
 
 }

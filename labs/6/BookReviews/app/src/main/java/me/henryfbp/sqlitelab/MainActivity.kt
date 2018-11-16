@@ -18,13 +18,16 @@ class MainActivity : AppCompatActivity() {
         /* CRUD Operations */
 
         Log.d(db.javaClass.simpleName, "Adding some cool books.")
-        // add Books
+
         db.add(Book("Android Studio Development Essentials", "Neil Smyth"))
         db.add(Book("Beginning Android Application Development", "Wei-Meng Lee"))
         db.add(Book("Programming Android", "Wallace Jackson"))
         db.add(Book("Hello, Android", "Wallace Jackson"))
+
         // A test book.
         db.add(Book("I am Lord of Potatoes", "god"))
+
+        // Make sure our book-updating works.
 
         var list = db.getAll()
 
@@ -35,9 +38,7 @@ class MainActivity : AppCompatActivity() {
         db.update(b)
 
         // Ensure it worked.
-        if (!db.getAll().contains(Book("I am Lord of Potatoes", "Potato Lord"))) {
-            throw AssertionError()
-        }
+        assert(db.getAll().contains(Book("I am Lord of Potatoes", "Potato Lord")))
 
         // Delete the last item. Potatoes are EVIL!
         db.delete(list[list.size - 1])
@@ -47,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         //Test from Step 6.1:
         run {
-            Log.i(db.javaClass.simpleName, "\n")
 
             val x = 3
             val s1 = "POTATO LORD RETURNS"
@@ -60,17 +60,9 @@ class MainActivity : AppCompatActivity() {
             list = db.getAll()
             val updated = list[x]
 
-            if (updated.id == null || j != updated.id) {
-                throw AssertionError(updated)
-            }
-
-            if (!updated.title.equals(s1, ignoreCase = true)) {
-                throw AssertionError(updated)
-            }
-
-            if (!updated.author.equals(s2, ignoreCase = true)) {
-                throw AssertionError(updated)
-            }
+            assert(j.toLong() == updated.id) { updated }
+            assert(updated.title.equals(s1, ignoreCase = true)) { updated }
+            assert(updated.author.equals(s2, ignoreCase = true)) { updated }
 
             Log.i(db.javaClass.simpleName, "Step 6.1 worked!")
         }
@@ -80,11 +72,9 @@ class MainActivity : AppCompatActivity() {
         run {
             Log.i(db.javaClass.simpleName, "\n")
 
-            if (list.size != db.getCount()) {
-                throw AssertionError(String.format("%d != %d", list.size, db.getCount()))
-            }
+            assert(list.size == db.getCount()) { "${list.size} != ${db.getCount()}" }
 
-            Log.i(db.javaClass.simpleName, "Step 6.2 worked!")
+            Log.i(db.javaClass.simpleName, "Step 6.2 worked! ${list.size} = ${db.getCount()}!")
         }
 
     }
