@@ -3,6 +3,7 @@ package me.henryfbp.sqlitelabpartdeux
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.ListView
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         db.add(Book("Beginning Android Application Development", "Wei-Meng Lee", 2f))
         db.add(Book("Programming Android", "Wallace Jackson", 3f))
         db.add(Book("Hello, Android", "Wallace Jackson", 4f))
+
+        // Populate UI with books.
+        val listViewBooks = findViewById<ListView>(R.id.listViewBooks)
+        val customAdapter = ListAdapterBook(this, R.layout.item_single_book, db.getAll())
+        listViewBooks.adapter = customAdapter
+
 
         //Tests.
         run {
@@ -80,6 +87,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
 
     }
 }

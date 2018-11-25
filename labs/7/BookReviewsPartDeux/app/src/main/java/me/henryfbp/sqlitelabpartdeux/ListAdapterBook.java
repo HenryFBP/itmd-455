@@ -22,7 +22,7 @@ public class ListAdapterBook extends ArrayAdapter<Book> {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         View v = convertView;
 
@@ -30,7 +30,7 @@ public class ListAdapterBook extends ArrayAdapter<Book> {
 
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.itemlistrow, parent);
+            v = vi.inflate(R.layout.item_single_book, null);
         }
 
         Book p = getItem(position);
