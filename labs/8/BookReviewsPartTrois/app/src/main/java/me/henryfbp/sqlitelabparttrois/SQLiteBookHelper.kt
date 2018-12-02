@@ -45,6 +45,19 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
             return writableDatabase
         }
 
+    /**
+     * Given an ID, return a book.
+     */
+    fun get(id: Long): Book {
+        val query = "SELECT * FROM $TABLE_BOOKS WHERE $KEY_ID = $id"
+        val cursor = this.rDb.rawQuery(query, null)
+
+        if (cursor.moveToFirst()) {
+            return Book(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getFloat(3))
+        } else {
+            throw Exception("ID not found.")
+        }
+    }
 
     // Get All Books
     // 1. build the query
@@ -54,7 +67,7 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     // return books
     fun getAll(): List<Book> {
         val books = LinkedList<Book>()
-        val query = String.format("SELECT * FROM %s", TABLE_BOOKS)
+        val query = "SELECT * FROM $TABLE_BOOKS"
         val db = this.wDb
         val cursor = db.rawQuery(query, null)
 
@@ -234,7 +247,49 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return cursor.count
     }
 
-    fun getRatingMax(): Any? = "potato"
+    /**
+     * Book(s) with the largest rating.
+     */
+    fun getRatingMax(): ArrayList<Book> {
+
+        // All book IDs sorted by their rating.
+        val query = """
+                            |SELECT
+                                |$KEY_ID
+                            |FROM
+                                |$TABLE_BOOKS
+                            |ORDER BY
+                                |$KEY_RATING DESC""".trimMargin()
+
+        val books = ArrayList<Book>()
+
+        val cursor = rDb.rawQuery(query, null)
+
+        // If any books exist,
+        if (cursor.moveToFirst()) {
+
+            // Get the highest one.
+            val highest_book = get(cursor.getLong(0))
+
+            while (cursor.moveToNext()) {
+
+                // Get the next one.
+                val nextbook = get(cursor.getLong(0))
+
+                // If it's at LEAST as large or larger,
+                if (nextbook.rating >= highest_book.rating) {
+                    // Add it.
+                    books.add(nextbook)
+                }
+
+            }
+
+        }
+
+        // Return our array.
+        return books
+    }
+
 
     fun getRatingMin(): Any? = "dodado"
 

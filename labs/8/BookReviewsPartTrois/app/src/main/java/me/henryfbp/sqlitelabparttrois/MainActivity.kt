@@ -15,19 +15,29 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, `length-osity`: Long) {
 
         val choice: String = (adapterView.adapter.getItem(position) as String).toLowerCase()
-        
+
         when (choice) {
             "highest rated" -> {
-                Toast.makeText(this, "Title :: " + db.getRatingMax(), Toast.LENGTH_LONG).show()
+
+                var bookList = db.getRatingMax()
+
+                var message = "Got ${bookList.size} top books! Here they are:\n"
+
+                for (book in bookList) {
+                    message += "$book\n"
+                }
+
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
             }
             "lowest rated" -> {
-                Toast.makeText(this, "Title :: " + db.getRatingMin(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Title :: ${db.getRatingMin()}", Toast.LENGTH_LONG).show()
             }
             "record count" -> {
-                Toast.makeText(this, "Record Count :: " + db.getTotal(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Record Count :: ${db.getTotal()}", Toast.LENGTH_LONG).show()
             }
             "titles containing 'android'" -> {
-                Toast.makeText(this, "Title :: " + db.getBooks(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Title :: ${db.getBooks()}", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -55,7 +65,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         db.add(Book("Android Studio Development Essentials", "Neil Smyth", 1f),
                 Book("Beginning Android Application Development", "Wei-Meng Lee", 2f),
                 Book("Programming Android", "Wallace Jackson", 3f),
-                Book("Hello, Android", "Wallace Jackson", 4f))
+                Book("I SHOULDN'T BE VISIBLE IF TESTING", "ASDF MAN", 5f),
+                Book("Hello, Android", "Wallace Jackson", 5f),
+                Book("Hello, Android 2", "Wallace Jackson 2", 5f)
+        )
 
 
         // Populate spinner with choices.
@@ -125,6 +138,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 }
 
             }
+            customAdapter.clear()
+            customAdapter.addAll(db.getAll())
         }
 
 
