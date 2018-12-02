@@ -14,30 +14,48 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, `length-osity`: Long) {
 
-        val choice: String = (adapterView.adapter.getItem(position) as String).toLowerCase()
+        val choice: String = adapterView.adapter.getItem(position) as String
 
-        when (choice) {
+        when (choice.toLowerCase()) {
             "highest rated" -> {
 
-                var bookList = db.getRatingMax()
+                // All highest-rated books.
+                val bookList = db.getRatingMax()
 
                 var message = "Got ${bookList.size} top books! Here they are:\n"
 
-                for (book in bookList) {
-                    message += "$book\n"
-                }
+                // Add all books as string versions.
+                bookList.forEach { message += "$it\n" }
 
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
             }
             "lowest rated" -> {
-                Toast.makeText(this, "Title :: ${db.getRatingMin()}", Toast.LENGTH_LONG).show()
+                // All lowest-rated books.
+                val bookList = db.getRatingMin()
+
+                var message = "Got ${bookList.size} worst books! Here they are:\n"
+
+                // Add all books as string versions.
+                bookList.forEach { message += "$it\n" }
+
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
             "record count" -> {
                 Toast.makeText(this, "Record Count :: ${db.getTotal()}", Toast.LENGTH_LONG).show()
             }
             "titles containing 'android'" -> {
-                Toast.makeText(this, "Title :: ${db.getBooks()}", Toast.LENGTH_LONG).show()
+
+                // All books with 'android'.
+                val bookList: List<Book> = db.bookTitlesContaining("android")
+
+                var message = """Got ${bookList.size} books with "android"! Here they are:
+                    |""".trimMargin()
+
+                // Add all books as string versions.
+                bookList.forEach { message += "$it\n" }
+
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }
 

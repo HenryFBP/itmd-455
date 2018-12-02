@@ -249,8 +249,11 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
 
     /**
      * Book(s) with the largest rating.
+     *
+     * Old SQL version.
      */
-    fun getRatingMax(): ArrayList<Book> {
+    @Deprecated("Newer and simpler version exists.")
+    fun getRatingMaxSQL(): ArrayList<Book> {
 
         // All book IDs sorted by their rating.
         val query = """
@@ -290,11 +293,38 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return books
     }
 
+    /**
+     * Get most popular books.
+     */
+    fun getRatingMax(): List<Book> { //TODO this is broken.
+        val all = getAll()
 
-    fun getRatingMin(): Any? = "dodado"
+        // Get highest rated book.
+        val largestBook = all.maxBy { it.rating }
 
-    fun getTotal(): Any? = "lolado"
+        assert(largestBook!!.rating == 5f)
 
-    fun getBooks(): Any? = "grobado"
+        // Get all books that are the same rating.
+        return all.filter { it.rating >= largestBook.rating }
+    }
+
+    /**
+     * Get least-popular books.
+     */
+    fun getRatingMin(): List<Book> {
+        val all = getAll()
+
+        // Get lowest rated book.
+        val largestBook = all.minBy { it.rating }
+
+        // Get all books that are the same rating.
+        return all.filter { it.rating == largestBook!!.rating }
+    }
+
+    fun getTotal(): Int = getAll().size
+
+    fun bookTitlesContaining(keyword: String): List<Book> {
+        return getAll().filter { it.title.toLowerCase().contains(keyword) }
+    }
 
 }
