@@ -234,4 +234,12 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return cursor.count
     }
 
+    fun getRatingMax(): Any? = "potato"
+
+    fun getRatingMin(): Any? = "dodado"
+
+    fun getTotal(): Any? = "lolado"
+
+    fun getBooks(): Any? = "grobado"
+
 }

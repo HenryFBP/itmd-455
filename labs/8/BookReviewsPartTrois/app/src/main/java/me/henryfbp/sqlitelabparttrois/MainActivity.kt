@@ -3,15 +3,47 @@ package me.henryfbp.sqlitelabparttrois
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.ListView
+import android.view.View
+import android.widget.*
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    lateinit var db: SQLiteBookHelper
+    val listSpinnerChoices = listOf("Highest Rated", "Lowest Rated", "Record Count", "Titles containing 'Android'")
+
+    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, `length-osity`: Long) {
+
+        val choice: String = (adapterView.adapter.getItem(position) as String).toLowerCase()
+        
+        when (choice) {
+            "highest rated" -> {
+                Toast.makeText(this, "Title :: " + db.getRatingMax(), Toast.LENGTH_LONG).show()
+            }
+            "lowest rated" -> {
+                Toast.makeText(this, "Title :: " + db.getRatingMin(), Toast.LENGTH_LONG).show()
+            }
+            "record count" -> {
+                Toast.makeText(this, "Record Count :: " + db.getTotal(), Toast.LENGTH_LONG).show()
+            }
+            "titles containing 'android'" -> {
+                Toast.makeText(this, "Title :: " + db.getBooks(), Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
+
+    override fun onNothingSelected(arg0: AdapterView<*>) {}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val db = SQLiteBookHelper(this)
+        db = SQLiteBookHelper(this)
+
+        val listViewBooks = findViewById<ListView>(R.id.listViewBooks)
+        val spinnerChoices = findViewById<Spinner>(R.id.spinnerChoices)
 
         Log.d(db.javaClass.simpleName, "Deleting all books.")
         db.deleteAll()
@@ -25,8 +57,13 @@ class MainActivity : AppCompatActivity() {
                 Book("Programming Android", "Wallace Jackson", 3f),
                 Book("Hello, Android", "Wallace Jackson", 4f))
 
+
+        // Populate spinner with choices.
+        val arrayAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, listSpinnerChoices)
+        spinnerChoices.adapter = arrayAdapter
+        spinnerChoices.onItemSelectedListener = this // What happens when item is selected?
+
         // Populate UI with books.
-        val listViewBooks = findViewById<ListView>(R.id.listViewBooks)
         val customAdapter = ListAdapterBook(this, R.layout.item_single_book, db.getAll())
         listViewBooks.adapter = customAdapter
 
