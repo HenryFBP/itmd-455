@@ -1,4 +1,4 @@
-package me.henryfbp.sqlitelabpartdeux
+package me.henryfbp.sqlitelabparttrois
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

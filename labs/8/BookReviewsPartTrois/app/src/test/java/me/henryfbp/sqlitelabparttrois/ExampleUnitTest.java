@@ -1,4 +1,4 @@
-package me.henryfbp.sqlitelabpartdeux;
+package me.henryfbp.sqlitelabparttrois;
 
 import org.junit.Test;
 

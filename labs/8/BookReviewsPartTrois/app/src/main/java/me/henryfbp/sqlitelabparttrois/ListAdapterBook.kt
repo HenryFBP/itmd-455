@@ -1,4 +1,4 @@
-package me.henryfbp.sqlitelabpartdeux
+package me.henryfbp.sqlitelabparttrois
 
 import android.content.Context
 import android.view.LayoutInflater
