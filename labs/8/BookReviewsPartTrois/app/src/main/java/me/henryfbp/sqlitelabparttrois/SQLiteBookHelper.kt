@@ -296,7 +296,7 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     /**
      * Get most popular books.
      */
-    fun getRatingMax(): List<Book> { //TODO this is broken.
+    fun getRatingMax(): List<Book> {
         val all = getAll()
 
         // Get highest rated book.
