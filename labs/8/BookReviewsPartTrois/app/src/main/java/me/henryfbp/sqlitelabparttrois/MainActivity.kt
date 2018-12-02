@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(db.javaClass.simpleName, "Adding some cool books.")
 
-        db.add(Book("Android Studio Development Essentials", "Neil Smyth", 1f))
-        db.add(Book("Beginning Android Application Development", "Wei-Meng Lee", 2f))
-        db.add(Book("Programming Android", "Wallace Jackson", 3f))
-        db.add(Book("Hello, Android", "Wallace Jackson", 4f))
+        db.add(Book("Android Studio Development Essentials", "Neil Smyth", 1f),
+                Book("Beginning Android Application Development", "Wei-Meng Lee", 2f),
+                Book("Programming Android", "Wallace Jackson", 3f),
+                Book("Hello, Android", "Wallace Jackson", 4f))
 
         // Populate UI with books.
         val listViewBooks = findViewById<ListView>(R.id.listViewBooks)

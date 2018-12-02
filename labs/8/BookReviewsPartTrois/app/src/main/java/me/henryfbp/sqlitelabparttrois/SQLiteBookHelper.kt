@@ -116,6 +116,10 @@ class SQLiteBookHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
         return book
     }
 
+    fun add(vararg books: Book) = books.forEach { book -> this.add(book) }
+
+    fun add(books: List<Book>) = books.forEach { book -> this.add(book) }
+
     // Updating single book
     fun update(book: Book): Long {
 
