@@ -32,60 +32,62 @@ class MainActivity : AppCompatActivity() {
 
 
         //Tests.
-        run {
-            // A test book.
-            db.add(Book("I am Lord of Potatoes", "god", 5f))
-
-            // Make sure our book-updating works.
-
-            val list = db.getAll()
-
-            val b = list[list.size - 1]
-            b.author = "Potato Lord"
-
-            // Make the author "Potato Lord" for testing purposes.
-            db.update(b)
-
-            // Ensure it worked.
-            assert(db.getAll().contains(Book("I am Lord of Potatoes", "Potato Lord", 5f)))
-
-            // Delete the last item. Potatoes are EVIL!
-            db.delete(list[list.size - 1])
-
-            // Check that we have deleted it.
-            db.getAll()
-        }.also {
-
-            //Test from Step 6.1:
-            var list = db.getAll()
-
-            val x = 3
-            val s1 = "POTATO LORD RETURNS"
-            val s2 = "SPUD MAN"
-
-            // Update book.
-            val j = db.update(list[x], s1, s2)
-
-            // Get updated book.
-            list = db.getAll()
-            val updated = list[x]
-
-            assert(j.toLong() == updated.id) { updated }
-            assert(updated.title.equals(s1, ignoreCase = true)) { updated }
-            assert(updated.author.equals(s2, ignoreCase = true)) { updated }
-
-            Log.i(db.javaClass.simpleName, "Step 6.1 worked!")
-
-
-            // Test for step 6.2
+        if (BuildConfig.DEBUG) {
             run {
-                Log.i(db.javaClass.simpleName, "\n")
+                // A test book.
+                db.add(Book("I am Lord of Potatoes", "god", 5f))
 
-                assert(list.size == db.getCount()) { "${list.size} != ${db.getCount()}" }
+                // Make sure our book-updating works.
 
-                Log.i(db.javaClass.simpleName, "Step 6.2 worked! ${list.size} = ${db.getCount()}!")
+                val list = db.getAll()
+
+                val b = list[list.size - 1]
+                b.author = "Potato Lord"
+
+                // Make the author "Potato Lord" for testing purposes.
+                db.update(b)
+
+                // Ensure it worked.
+                assert(db.getAll().contains(Book("I am Lord of Potatoes", "Potato Lord", 5f)))
+
+                // Delete the last item. Potatoes are EVIL!
+                db.delete(list[list.size - 1])
+
+                // Check that we have deleted it.
+                db.getAll()
+            }.also {
+
+                //Test from Step 6.1:
+                var list = db.getAll()
+
+                val x = 3
+                val s1 = "POTATO LORD RETURNS"
+                val s2 = "SPUD MAN"
+
+                // Update book.
+                val j = db.update(list[x], s1, s2)
+
+                // Get updated book.
+                list = db.getAll()
+                val updated = list[x]
+
+                assert(j.toLong() == updated.id) { updated }
+                assert(updated.title.equals(s1, ignoreCase = true)) { updated }
+                assert(updated.author.equals(s2, ignoreCase = true)) { updated }
+
+                Log.i(db.javaClass.simpleName, "Step 6.1 worked!")
+
+
+                // Test for step 6.2
+                run {
+                    Log.i(db.javaClass.simpleName, "\n")
+
+                    assert(list.size == db.getCount()) { "${list.size} != ${db.getCount()}" }
+
+                    Log.i(db.javaClass.simpleName, "Step 6.2 worked! ${list.size} = ${db.getCount()}!")
+                }
+
             }
-
         }
 
 
